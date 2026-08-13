@@ -464,7 +464,7 @@ ${paper.questionsPreview.join('\n\n')}
         }).join('');
     }
 
-    // Staff Directory Renderer (Clean Frontend View)
+    // Staff Directory Renderer (Clickable Lecturer Profiles)
     function renderStaffDirectory(highlightId = null) {
         const container = document.getElementById('staff-container');
         if (!container) return;
@@ -475,7 +475,7 @@ ${paper.questionsPreview.join('\n\n')}
             const deptName = dept ? dept.name : "Academic Faculty";
 
             return `
-                <div class="staff-card ${isNew ? 'newly-uploaded' : ''}" id="staff-${staff.id}">
+                <div class="staff-card clickable-card ${isNew ? 'newly-uploaded' : ''}" id="staff-${staff.id}" onclick="viewStaffProfile('${staff.id}')" title="Click to view full lecturer profile and consultation hours">
                     ${staff.badge ? `<span style="position: absolute; top: 1rem; right: 1rem; background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 12px; text-transform: uppercase;">${staff.badge}</span>` : ''}
                     
                     ${staff.photo ? `<img src="${staff.photo}" class="staff-avatar-img" alt="${staff.name}">` : `<div class="staff-avatar">${staff.name.charAt(0)}</div>`}
@@ -492,11 +492,11 @@ ${paper.questionsPreview.join('\n\n')}
                     <div class="staff-details">
                         <div class="staff-details-item">
                             <i class="fas fa-envelope" style="color: var(--primary);"></i> 
-                            <a href="mailto:${staff.email}" style="color: var(--primary); text-decoration: underline;">${staff.email}</a>
+                            <a href="mailto:${staff.email}" onclick="event.stopPropagation();" style="color: var(--primary); text-decoration: underline;">${staff.email}</a>
                         </div>
                         <div class="staff-details-item">
                             <i class="fas fa-phone" style="color: var(--primary);"></i> 
-                            <a href="tel:${staff.phone}" style="color: inherit;">${staff.phone}</a>
+                            <a href="tel:${staff.phone}" onclick="event.stopPropagation();" style="color: inherit;">${staff.phone}</a>
                         </div>
                         <div class="staff-details-item">
                             <i class="fas fa-building" style="color: var(--primary);"></i> ${staff.office}
@@ -506,13 +506,88 @@ ${paper.questionsPreview.join('\n\n')}
                         </div>
                     </div>
                     
-                    <a href="${staff.classroomLink || '#'}" target="_blank" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;">
-                        <i class="fab fa-google"></i> Classroom Profile
-                    </a>
+                    <div style="display: flex; gap: 0.5rem; width: 100%;">
+                        <button class="btn btn-primary btn-sm" style="flex: 1; justify-content: center;" onclick="event.stopPropagation(); viewStaffProfile('${staff.id}')">
+                            <i class="fas fa-id-card"></i> View Profile
+                        </button>
+                        <a href="${staff.classroomLink || '#'}" target="_blank" onclick="event.stopPropagation();" class="btn btn-secondary btn-sm" style="padding: 0.45rem 0.85rem;" title="Google Classroom">
+                            <i class="fab fa-google"></i>
+                        </a>
+                    </div>
                 </div>
             `;
         }).join('');
     }
+
+    // View Staff Profile Modal Popup
+    window.viewStaffProfile = function(staffId) {
+        const staff = MTC_DATA.staffDirectory.find(s => s.id === staffId);
+        if (!staff) return;
+
+        const modal = document.getElementById('staff-modal');
+        const nameEl = document.getElementById('staff-modal-name');
+        const bodyEl = document.getElementById('staff-modal-body');
+        if (!modal || !bodyEl) return;
+
+        const dept = MTC_DATA.departments.find(d => d.id === staff.departmentId);
+        const deptName = dept ? dept.name : "Academic Faculty";
+
+        nameEl.textContent = `${staff.name} — Profile Details`;
+        bodyEl.innerHTML = `
+            <div style="display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                ${staff.photo ? `<img src="${staff.photo}" style="width: 96px; height: 96px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); box-shadow: var(--shadow-md);">` : `<div style="width: 96px; height: 96px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 700;">${staff.name.charAt(0)}</div>`}
+                <div style="flex: 1; min-width: 240px;">
+                    <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.3rem;">
+                        <h3 style="font-size: 1.35rem; margin: 0;">${staff.name}</h3>
+                        ${staff.badge ? `<span style="background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 12px; text-transform: uppercase;">${staff.badge}</span>` : ''}
+                    </div>
+                    <div style="font-size: 0.95rem; color: var(--primary); font-weight: 600; margin-bottom: 0.4rem;">${staff.title}</div>
+                    <div style="background: rgba(6, 78, 59, 0.08); color: var(--primary); font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 20px; display: inline-block;">
+                        <i class="fas fa-university"></i> ${deptName}
+                    </div>
+                </div>
+            </div>
+
+            ${staff.specialization ? `
+                <div style="background: var(--bg-main); padding: 1rem 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--accent); margin-bottom: 1.5rem;">
+                    <strong style="color: var(--text-primary);"><i class="fas fa-microscope" style="color: var(--accent);"></i> Academic Specialization & Research:</strong>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.3rem;">${staff.specialization}</p>
+                </div>
+            ` : ''}
+
+            <h4 style="font-size: 1rem; margin-bottom: 0.75rem; color: var(--primary);"><i class="fas fa-address-book"></i> Office & Contact Information</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.85rem; border-radius: var(--radius-sm);">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Email Contact</div>
+                    <a href="mailto:${staff.email}" style="color: var(--primary); font-weight: 600; font-size: 0.88rem; text-decoration: underline;"><i class="fas fa-envelope"></i> ${staff.email}</a>
+                </div>
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.85rem; border-radius: var(--radius-sm);">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Campus Phone / Extension</div>
+                    <a href="tel:${staff.phone}" style="color: var(--text-primary); font-weight: 600; font-size: 0.88rem;"><i class="fas fa-phone"></i> ${staff.phone}</a>
+                </div>
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.85rem; border-radius: var(--radius-sm);">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Office Location</div>
+                    <div style="color: var(--text-primary); font-weight: 600; font-size: 0.88rem;"><i class="fas fa-building" style="color: var(--primary);"></i> ${staff.office}</div>
+                </div>
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.85rem; border-radius: var(--radius-sm);">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Consultation Hours</div>
+                    <div style="color: var(--text-primary); font-weight: 600; font-size: 0.88rem;"><i class="far fa-clock" style="color: var(--primary);"></i> ${staff.officeHours}</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; justify-content: flex-end; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+                <a href="mailto:${staff.email}" class="btn btn-secondary"><i class="fas fa-paper-plane"></i> Send Email</a>
+                <a href="${staff.classroomLink || '#'}" target="_blank" class="btn btn-primary"><i class="fab fa-google"></i> Open Classroom</a>
+            </div>
+        `;
+
+        modal.classList.add('active');
+    };
+
+    window.closeStaffModal = function() {
+        const modal = document.getElementById('staff-modal');
+        if (modal) modal.classList.remove('active');
+    };
 
     // Image Upload File Reader Helper
     function initImageUploadPreviews() {
