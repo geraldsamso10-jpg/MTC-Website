@@ -157,13 +157,9 @@
             <!-- Hero Component with Prominent Campus Photo -->
             <div class="hero-showcase-container" style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0; background: var(--primary-dark); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 2rem; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);">
                 <div class="hero-overlay" style="padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(135deg, rgba(2, 44, 34, 0.98) 0%, rgba(6, 78, 59, 0.92) 100%);">
-                    <div class="hero-logo-container" style="margin-bottom: 1.25rem;">
-                        <img src="college_logo.jpg" alt="Masvingo Teachers' College Emblem" class="hero-logo-img" onclick="switchTab('home')" style="cursor: pointer;">
-                        <div>
-                            <span class="hero-badge" style="margin-bottom: 0.2rem;">Official Academic Portal</span>
-                            <div style="font-size: 0.85rem; color: #fef08a; font-weight: 600;">"Emblem of Excellence"</div>
-                        </div>
-                    </div>
+                    <span class="hero-badge" style="margin-bottom: 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem; width: fit-content;">
+                        <i class="fas fa-graduation-cap"></i> Official Academic Portal • Department of ICT
+                    </span>
                     <h2 class="hero-title" style="font-size: 2.1rem; line-height: 1.25; margin-bottom: 1rem; color: #ffffff;">Empowering Educator Preparation through Digital Academic Access</h2>
                     <p class="hero-subtitle" style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
                         Welcome to the official Academic Web Portal of Masvingo Teachers' College. Explore course outlines, search past examination papers from 2020–2026, track academic dates, and connect with Google Classroom e-learning modules.
@@ -288,21 +284,6 @@
                     </div>
                     <div style="background: rgba(6, 78, 59, 0.08); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.82rem; color: var(--primary); cursor: pointer;" onclick="switchTab('resources')">
                         <i class="fas fa-server"></i> Built with <strong>Django ORM & Vanilla JS Architecture</strong>. <span style="text-decoration: underline;">Browse Repository &rarr;</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Campus Landmark Showcase Banner -->
-            <div style="position: relative; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 2.5rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-md); background: var(--bg-card); cursor: pointer;" onclick="switchTab('courses')">
-                <div style="position: relative; max-height: 440px; overflow: hidden;">
-                    <img src="campus_hero.jpg" alt="I Love Masvingo Teachers' College Campus" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                    <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(2, 44, 34, 0.92) 0%, rgba(2, 44, 34, 0.4) 65%, transparent 100%); padding: 1.5rem 2rem; color: #ffffff;">
-                        <span style="background: var(--accent); color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 0.4rem;">
-                            <i class="fas fa-university"></i> Masvingo Teachers' College Campus
-                        </span>
-                        <h3 style="font-size: 1.4rem; font-weight: 700; margin: 0; color: #ffffff;">
-                            "Emblem of Excellence" — Inspiring Future Educators
-                        </h3>
                     </div>
                 </div>
             </div>
