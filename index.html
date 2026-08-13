@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masvingo Teachers' College - Academic Portal</title>
+    
+    <!-- Meta Descriptions & SEO -->
+    <meta name="description" content="Official Academic Portal for Masvingo Teachers' College. Access course outlines, past examination papers, academic calendars, and announcements. Integrated with Google Workspace.">
+    <meta name="author" content="Jerry - NUST Computer Science Industrial Attachee">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="college_logo.jpg">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Institutional Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <span><i class="fas fa-university"></i> Masvingo Teachers' College — ICT Department</span>
+            <span><i class="fas fa-calendar-day"></i> <span id="current-date">Term 3 Academic Session (2026)</span></span>
+        </div>
+        <div class="top-bar-right">
+            <span id="session-user-badge" class="logged-in-user-badge" style="display: none;">
+                <i class="fas fa-user-check"></i> <span id="session-username">Jerry (ICT Admin)</span>
+            </span>
+            <span class="workspace-badge"><i class="fab fa-google"></i> Google Workspace & Classroom Integrated</span>
+            <a href="#admin" id="admin-mode-toggle" class="admin-mode-btn"><i class="fas fa-user-shield"></i> Staff Portal / Admin</a>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="brand-container">
+                <div class="logo-badge">
+                    <img src="college_logo.jpg" alt="Masvingo Teachers' College Emblem" class="brand-logo-img">
+                </div>
+                <div class="brand-text">
+                    <h1>MASVINGO TEACHERS' COLLEGE</h1>
+                    <p>Department of Information & Communication Technology • Academic Portal</p>
+                </div>
+            </div>
+            
+            <div class="header-controls">
+                <div style="position: relative; width: 260px;">
+                    <input type="text" id="global-search-input" class="form-control" placeholder="Search papers, courses..." style="padding-left: 2.2rem;">
+                    <i class="fas fa-search" style="position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                </div>
+                <button id="theme-toggle-btn" class="theme-toggle-btn">
+                    <i class="fas fa-moon"></i> Dark Mode
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs-wrapper">
+            <ul class="nav-tabs">
+                <li class="nav-tab-item active" data-tab="home"><i class="fas fa-home"></i> Home / Overview</li>
+                <li class="nav-tab-item" data-tab="courses"><i class="fas fa-graduation-cap"></i> Programmes & Courses</li>
+                <li class="nav-tab-item" data-tab="resources"><i class="fas fa-file-pdf"></i> Past Examination Papers</li>
+                <li class="nav-tab-item" data-tab="announcements"><i class="fas fa-bullhorn"></i> Notices & Academic Calendar</li>
+                <li class="nav-tab-item" data-tab="staff"><i class="fas fa-users"></i> Staff Directory</li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+        <!-- TAB 1: HOME & OVERVIEW -->
+        <section id="tab-home" class="tab-pane active">
+            <!-- Hero Component -->
+            <div class="hero-card">
+                <div class="hero-overlay">
+                    <div class="hero-logo-container">
+                        <img src="college_logo.jpg" alt="Masvingo Teachers' College Emblem" class="hero-logo-img">
+                        <div>
+                            <span class="hero-badge" style="margin-bottom: 0.2rem;">Official Academic Portal</span>
+                            <div style="font-size: 0.85rem; color: #fef08a; font-weight: 600;">"Emblem of Excellence"</div>
+                        </div>
+                    </div>
+                    <h2 class="hero-title">Empowering Educator Preparation through Digital Academic Access</h2>
+                    <p class="hero-subtitle">
+                        Welcome to the official Academic Web Portal of Masvingo Teachers' College. Explore course outlines, search past examination papers from 2020–2026, track academic dates, and connect with Google Classroom e-learning modules.
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="switchTab('resources')">
+                            <i class="fas fa-search"></i> Search Past Examination Papers
+                        </button>
+                        <button class="btn btn-secondary" onclick="switchTab('courses')">
+                            <i class="fas fa-book-open"></i> Browse Programmes & Courses
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- College Key Statistics Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                    <div>
+                        <div class="stat-number" id="stat-students">2,450+</div>
+                        <div class="stat-label">Active Student Teachers</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div>
+                        <div class="stat-number" id="stat-lecturers">120+</div>
+                        <div class="stat-label">Academic Staff</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
+                    <div>
+                        <div class="stat-number" id="stat-pastpapers">380+</div>
+                        <div class="stat-label">Digitized Past Papers</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-award"></i></div>
+                    <div>
+                        <div class="stat-number" id="stat-passrate">96.4%</div>
+                        <div class="stat-label">Academic Pass Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vision, Mission & Project Background -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 2.5rem;">
+                <div style="background: var(--bg-card); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                    <h3 style="font-size: 1.4rem; color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-compass"></i> College Vision & Mandate</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.2rem;">
+                        <strong>Masvingo Teachers' College</strong> is committed to training highly qualified, innovative, and reflective educators who drive primary and early childhood education across Zimbabwe.
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--primary);">
+                            <h4 style="color: var(--primary); font-size: 1.05rem; margin-bottom: 0.4rem;">Our Vision</h4>
+                            <p style="font-size: 0.88rem; color: var(--text-secondary);">To be a premier center of teacher education, educational research, and technological innovation in Sub-Saharan Africa.</p>
+                        </div>
+                        <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--accent);">
+                            <h4 style="color: var(--accent); font-size: 1.05rem; margin-bottom: 0.4rem;">Our Mission</h4>
+                            <p style="font-size: 0.88rem; color: var(--text-secondary);">To produce technologically competent educators through rigorous academic inquiry and Heritage 5.0 practical skills.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-card); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase;">Attachment Project Brief</span>
+                        <h3 style="font-size: 1.2rem; margin: 0.4rem 0 0.8rem 0;">ICT Department Initiative</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                            Prepared by <strong>Jerry</strong>, NUST Computer Science Industrial Attachee. Designed to complement institutional Google Workspace deployment with structured paper repositories and department portals.
+                        </p>
+                    </div>
+                    <div style="background: rgba(6, 78, 59, 0.08); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.82rem; color: var(--primary);">
+                        <i class="fas fa-server"></i> Built with <strong>Django ORM & Vanilla JS Architecture</strong> for easy institutional maintenance.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Departments Grid -->
+            <div class="section-header">
+                <div class="section-title">
+                    <h2>Academic Departments</h2>
+                    <p>Explore the six core departments driving academic excellence at Masvingo Teachers' College</p>
+                </div>
+            </div>
+            <div class="dept-grid" id="departments-container"></div>
+        </section>
+
+        <!-- TAB 2: COURSES & PROGRAMMES -->
+        <section id="tab-courses" class="tab-pane">
+            <div class="section-header">
+                <div class="section-title">
+                    <h2>Academic Programmes & Course Outlines</h2>
+                    <p>Detailed programme structure, duration, entry requirements, and Google Classroom links</p>
+                </div>
+            </div>
+            <div id="programmes-container"></div>
+        </section>
+
+        <!-- TAB 3: PAST EXAMINATION PAPERS REPOSITORY -->
+        <section id="tab-resources" class="tab-pane">
+            <div class="section-header">
+                <div class="section-title">
+                    <h2>Past Examination Papers Repository</h2>
+                    <p>Search, preview, and download digitized examination papers from 2020 to 2026</p>
+                </div>
+            </div>
+
+            <!-- Filter & Search Controls -->
+            <div class="filter-bar">
+                <div>
+                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Search Keyword / Course Code</label>
+                    <input type="text" id="paper-search-input" class="form-control" placeholder="e.g. ICT101, Child Development, Mutero..." oninput="filterPapers()">
+                </div>
+                <div>
+                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Department</label>
+                    <select id="dept-filter-select" class="form-control" onchange="filterPapers()">
+                        <option value="all">All Departments</option>
+                        <option value="ict">ICT Department</option>
+                        <option value="ped">Primary Education</option>
+                        <option value="ecd">Early Childhood Dev</option>
+                        <option value="stm">Science & Math</option>
+                        <option value="hum">Humanities</option>
+                        <option value="tech">Technical & Vocational</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Examination Year</label>
+                    <select id="year-filter-select" class="form-control" onchange="filterPapers()">
+                        <option value="all">All Years (2020-2026)</option>
+                        <option value="2026">2026</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+                <div style="display: flex; align-items: flex-end; gap: 0.5rem;">
+                    <button class="btn btn-secondary" style="width: 50%;" onclick="resetPaperFilters()"><i class="fas fa-undo"></i> Reset</button>
+                    <button class="btn btn-primary" style="width: 50%; background: var(--accent); font-size: 0.8rem;" onclick="filterCustomUploadedPapers()"><i class="fas fa-folder-plus"></i> Staff Uploads</button>
+                </div>
+            </div>
+
+            <!-- Paper Cards Grid -->
+            <div class="paper-grid" id="past-papers-container"></div>
+        </section>
+
+        <!-- TAB 4: ANNOUNCEMENTS & CALENDAR -->
+        <section id="tab-announcements" class="tab-pane">
+            <div class="section-header">
+                <div class="section-title">
+                    <h2>Academic Notices & Institutional Calendar</h2>
+                    <p>Stay updated with college notices, exam dates, Teaching Practice schedules, and ICT workshops</p>
+                </div>
+            </div>
+
+            <div class="dual-layout">
+                <!-- Column 1: Announcements Feed -->
+                <div>
+                    <h3 style="font-size: 1.25rem; color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-bullhorn"></i> Recent Notices & Bulletins</h3>
+                    <div class="announcement-list" id="announcements-container"></div>
+                </div>
+
+                <!-- Column 2: Academic Calendar -->
+                <div>
+                    <h3 style="font-size: 1.25rem; color: var(--accent); margin-bottom: 1rem;"><i class="far fa-calendar-alt"></i> Key Academic Calendar Dates</h3>
+                    <div class="calendar-list" id="calendar-events-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: STAFF DIRECTORY -->
+        <section id="tab-staff" class="tab-pane">
+            <div class="section-header">
+                <div class="section-title">
+                    <h2>Academic Staff & Lecturer Directory</h2>
+                    <p>Contact details, office locations, consultation hours, and Google Classroom profiles</p>
+                </div>
+            </div>
+
+            <!-- Staff Grid Container -->
+            <div class="staff-grid" id="staff-container"></div>
+        </section>
+
+    <!-- Staff Authentication Login Modal -->
+    <div id="staff-login-modal" class="modal-backdrop">
+        <div class="modal-container" style="max-width: 440px;">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <img src="college_logo.jpg" alt="Masvingo Teachers' College Emblem" class="modal-logo-img">
+                    <div>
+                        <h3 style="font-size: 1.15rem;">Staff & Lecturer Login</h3>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">Masvingo Teachers' College ICT Portal</p>
+                    </div>
+                </div>
+                <button class="close-modal-btn" id="close-login-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="staff-login-form">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Staff Email / Username</label>
+                        <input type="text" id="login-username" class="form-control" placeholder="e.g. admin or t.mutero@masvingotc.ac.zw" value="admin" required>
+                    </div>
+                    <div style="margin-bottom: 1.25rem;">
+                        <label style="font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Staff Password</label>
+                        <input type="password" id="login-password" class="form-control" placeholder="Password..." value="mtc2026" required>
+                    </div>
+                    <div id="login-error-msg" style="color: #ef4444; font-size: 0.82rem; margin-bottom: 1rem; display: none; background: rgba(239, 68, 68, 0.1); padding: 0.5rem 0.75rem; border-radius: 6px;">
+                        Invalid staff credentials. Default: <code>admin</code> / <code>mtc2026</code>.
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        <i class="fas fa-sign-in-alt"></i> Authenticate & Access Staff Portal
+                    </button>
+                </form>
+                <div style="margin-top: 1.25rem; font-size: 0.78rem; color: var(--text-muted); background: var(--bg-main); padding: 0.75rem; border-radius: var(--radius-sm); border: 1px dashed var(--border-color);">
+                    <i class="fas fa-shield-alt" style="color: var(--accent);"></i> <strong>Security Access Control:</strong><br>
+                    Requires authenticated staff credentials to upload examination papers, post announcements, or manage lecturer photos.<br>
+                    <span style="color: var(--primary); font-weight: 600;">Demo Username:</span> <code>admin</code> | <span style="color: var(--primary); font-weight: 600;">Password:</span> <code>mtc2026</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Past Paper Preview Modal -->
+    <div id="paper-modal" class="modal-backdrop">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <img src="college_logo.jpg" alt="Masvingo Teachers' College Emblem" class="modal-logo-img">
+                    <h3 id="modal-paper-title">Examination Paper Details</h3>
+                </div>
+                <button class="close-modal-btn" onclick="closePaperModal()">&times;</button>
+            </div>
+            <div id="modal-paper-body" class="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Edit Item Modal -->
+    <div id="edit-modal" class="modal-backdrop">
+        <div class="modal-container" style="max-width: 650px;">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <i class="fas fa-edit" style="font-size: 1.4rem; color: var(--accent);"></i>
+                    <h3 id="edit-modal-title">Edit Published Item</h3>
+                </div>
+                <button class="close-modal-btn" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div id="edit-modal-body" class="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Staff Admin Modal (Simulating Content Upload Interface) -->
+    <div id="admin-modal" class="modal-backdrop">
+        <div class="modal-container" style="max-width: 760px;">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <i class="fas fa-user-shield" style="font-size: 1.5rem; color: var(--accent);"></i>
+                    <div>
+                        <h3 style="font-size: 1.2rem;">Staff Content Management Dashboard</h3>
+                        <div style="font-size: 0.75rem; color: #10b981; font-weight: 600;"><i class="fas fa-lock"></i> Authenticated Session: Staff Admin Mode</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <button class="btn btn-secondary btn-sm" id="admin-logout-btn" style="background: #ef4444; color: #ffffff; border: none;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    <button class="close-modal-btn" id="close-admin-modal">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                    <button id="tab-btn-upload" class="btn btn-primary btn-sm" onclick="showAdminSection('upload')"><i class="fas fa-plus-circle"></i> Upload / Add New Content</button>
+                    <button id="tab-btn-manage" class="btn btn-secondary btn-sm" onclick="showAdminSection('manage')"><i class="fas fa-tasks"></i> Manage, Edit & Delete Published Content</button>
+                </div>
+
+                <!-- Section: Add / Upload Content -->
+                <div id="admin-upload-section">
+                <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-upload"></i> Publish Past Examination Paper</h4>
+                    <form id="add-paper-form">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Course Code</label>
+                                <input type="text" id="admin-paper-code" class="form-control" placeholder="e.g. ICT201" required>
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Course Title</label>
+                                <input type="text" id="admin-paper-title" class="form-control" placeholder="e.g. E-Learning Systems" required>
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Department</label>
+                                <select id="admin-paper-dept" class="form-control" required>
+                                    <option value="ict">ICT Department</option>
+                                    <option value="ped">Primary Education</option>
+                                    <option value="ecd">ECD Department</option>
+                                    <option value="stm">Science & Math</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Exam Year & Examiner</label>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <input type="text" id="admin-paper-year" class="form-control" value="2026" required>
+                                    <input type="text" id="admin-paper-examiner" class="form-control" placeholder="Examiner Name" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Sample Question 1</label>
+                                <textarea id="admin-paper-q1" class="form-control" rows="2" placeholder="Enter Question 1 text..." required></textarea>
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;"><i class="fas fa-image"></i> Attach Diagram / Paper Cover (Picture)</label>
+                                <input type="file" id="admin-paper-image" class="form-control" accept="image/*">
+                                <div id="paper-img-preview" class="img-upload-preview"></div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Upload Paper to Portal</button>
+                    </form>
+                </div>
+
+                <!-- Section 2: Add Announcement -->
+                <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                    <h4 style="color: var(--accent); margin-bottom: 1rem;"><i class="fas fa-bullhorn"></i> Post Urgent Notice / Announcement</h4>
+                    <form id="add-anc-form">
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Notice Title</label>
+                                <input type="text" id="admin-anc-title" class="form-control" placeholder="Notice Title..." required>
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Category</label>
+                                <select id="admin-anc-cat" class="form-control" required>
+                                    <option value="Urgent">Urgent</option>
+                                    <option value="Exam">Exam Notice</option>
+                                    <option value="E-Learning">Google Classroom</option>
+                                    <option value="TP">Teaching Practice</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="font-size: 0.8rem; font-weight: 600;">Content</label>
+                            <textarea id="admin-anc-content" class="form-control" rows="2" placeholder="Write announcement details..." required></textarea>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="font-size: 0.8rem; font-weight: 600;"><i class="fas fa-camera"></i> Attach Announcement Banner / Event Picture</label>
+                            <input type="file" id="admin-anc-image" class="form-control" accept="image/*">
+                            <div id="anc-img-preview" class="img-upload-preview"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="background: var(--primary);"><i class="fas fa-paper-plane"></i> Publish Notice</button>
+                    </form>
+                </div>
+
+                <!-- Section 3: Add Staff Member Profile with Picture Upload -->
+                <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-top: 1.5rem;">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-user-plus"></i> Add Academic Staff Profile (With Photo Upload)</h4>
+                    <form id="add-staff-form">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Full Name & Title</label>
+                                <input type="text" id="admin-staff-name" class="form-control" placeholder="e.g. Dr. A. Ndlovu" required>
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Designation / Title</label>
+                                <input type="text" id="admin-staff-title" class="form-control" placeholder="e.g. Lecturer - Computer Science" required>
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Department</label>
+                                <select id="admin-staff-dept" class="form-control" required>
+                                    <option value="ict">ICT Department</option>
+                                    <option value="ped">Primary Education</option>
+                                    <option value="ecd">ECD Department</option>
+                                    <option value="stm">Science & Math</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="font-size: 0.8rem; font-weight: 600;">Email & Office</label>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <input type="email" id="admin-staff-email" class="form-control" placeholder="email@masvingotc.ac.zw" required>
+                                    <input type="text" id="admin-staff-office" class="form-control" placeholder="Office #" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="font-size: 0.8rem; font-weight: 600;"><i class="fas fa-id-badge"></i> Upload Profile Photo (Picture)</label>
+                            <input type="file" id="admin-staff-photo" class="form-control" accept="image/*" required>
+                            <div id="staff-photo-preview" class="img-upload-preview"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="background: var(--accent);"><i class="fas fa-user-check"></i> Add Lecturer to Directory</button>
+                    </form>
+                </div>
+                </div>
+
+                <!-- Section: Manage / Edit / Delete Published Content -->
+                <div id="admin-manage-section" style="display: none;">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-tasks"></i> Published Portal Records (Edit & Delete)</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Select any published item below to edit its text, update picture attachments, or permanently delete it.
+                    </p>
+                    <div id="admin-manage-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <img src="college_logo.jpg" alt="Masvingo Teachers' College Emblem" class="footer-logo-img">
+                <h3>Masvingo Teachers' College</h3>
+                <p style="font-size: 0.88rem; margin-bottom: 1rem; color: #cbd5e1;">
+                    A leading teacher education institution committed to digital innovation, academic excellence, and heritage-based education.
+                </p>
+                <div class="workspace-badge" style="display: inline-flex;">
+                    <i class="fab fa-google"></i> Google Workspace Partner Institution
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Navigation</h3>
+                <ul class="footer-links">
+                    <li><a href="javascript:void(0)" onclick="switchTab('home')">Home / Overview</a></li>
+                    <li><a href="javascript:void(0)" onclick="switchTab('courses')">Programmes & Outlines</a></li>
+                    <li><a href="javascript:void(0)" onclick="switchTab('resources')">Past Exam Papers</a></li>
+                    <li><a href="javascript:void(0)" onclick="switchTab('announcements')">Academic Calendar</a></li>
+                    <li><a href="javascript:void(0)" onclick="switchTab('staff')">Staff Directory</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Departments</h3>
+                <ul class="footer-links">
+                    <li><a href="javascript:void(0)" onclick="filterPapersByDept('ict')">ICT Department</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterPapersByDept('ped')">Primary Education</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterPapersByDept('ecd')">ECD Department</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterPapersByDept('stm')">Science & Math</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterPapersByDept('hum')">Humanities</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Project Credits</h3>
+                <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 0.5rem;">
+                    <strong>Proposal & Development:</strong><br>
+                    Jerry (Industrial Attachee)<br>
+                    BSc Honours Computer Science, NUST
+                </p>
+                <p style="font-size: 0.85rem; color: #cbd5e1;">
+                    <strong>Supervision:</strong><br>
+                    ICT Department / Attachment Supervisor,<br>
+                    Masvingo Teachers' College
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Masvingo Teachers' College — Department of Information & Communication Technology. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
