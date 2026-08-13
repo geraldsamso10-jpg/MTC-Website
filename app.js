@@ -187,13 +187,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('stat-passrate').textContent = stats.passRate;
     }
 
-    // Render Departments
+    // Render Departments (Clickable Cards)
     function renderDepartments() {
         const container = document.getElementById('departments-container');
         if (!container) return;
 
         container.innerHTML = MTC_DATA.departments.map(dept => `
-            <div class="dept-card">
+            <div class="dept-card clickable-card" onclick="filterPapersByDept('${dept.id}')" title="Click to explore papers & courses for ${dept.name}">
                 <div>
                     <div class="dept-card-header">
                         <div class="dept-card-icon">
@@ -208,13 +208,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 1rem;">
                     <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fas fa-envelope"></i> ${dept.email}</span>
-                    <button class="btn btn-secondary btn-sm" onclick="filterPapersByDept('${dept.id}')">View Papers</button>
+                    <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); filterPapersByDept('${dept.id}')"><i class="fas fa-file-pdf"></i> View Papers</button>
                 </div>
             </div>
         `).join('');
     }
 
-    // Render Programmes & Courses
+    // Render Programmes & Courses (Clickable Course Units)
     function renderProgrammes() {
         const container = document.getElementById('programmes-container');
         if (!container) return;
@@ -236,14 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div style="background: var(--bg-main); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
                     <strong><i class="fas fa-check-circle" style="color: var(--primary);"></i> Entry Requirements:</strong> ${prog.entryRequirements}
                 </div>
-                <h4 style="font-size: 1rem; margin-bottom: 0.75rem; color: var(--primary);"><i class="fas fa-book"></i> Core Course Units</h4>
+                <h4 style="font-size: 1rem; margin-bottom: 0.75rem; color: var(--primary);"><i class="fas fa-book"></i> Core Course Units (Click any unit to search past papers)</h4>
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem;">
                     ${prog.courses.map(c => `
-                        <div style="background: var(--bg-card); padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                        <div class="clickable-card" onclick="filterPapersByCode('${c.code}')" style="background: var(--bg-card); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: var(--transition);" title="Click to view past examination papers for ${c.code}">
                             <div>
                                 <strong style="color: var(--accent);">${c.code}</strong>: ${c.title}
                             </div>
-                            <span style="font-size: 0.75rem; color: var(--text-muted);">${c.units} Units</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);"><i class="fas fa-search" style="font-size:0.7rem;"></i> ${c.units} Units</span>
                         </div>
                     `).join('')}
                 </div>
@@ -318,6 +318,16 @@ document.addEventListener('DOMContentLoaded', () => {
         switchTab('resources');
         document.getElementById('dept-filter-select').value = deptId;
         filterPapers();
+    };
+
+    window.filterPapersByCode = function(code) {
+        switchTab('resources');
+        const input = document.getElementById('paper-search-input');
+        if (input) input.value = code;
+        document.getElementById('dept-filter-select').value = 'all';
+        document.getElementById('year-filter-select').value = 'all';
+        filterPapers();
+        showToast(`Showing examination papers for course unit: ${code}`);
     };
 
     window.resetPaperFilters = function() {

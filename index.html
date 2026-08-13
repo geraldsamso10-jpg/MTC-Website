@@ -43,7 +43,7 @@
     <!-- Main Navigation Header -->
     <header class="main-header">
         <div class="header-container">
-            <div class="brand-container">
+            <div class="brand-container" onclick="switchTab('home')" style="cursor: pointer;" title="Back to Home">
                 <div class="logo-badge">
                     <img src="college_logo.jpg" alt="Masvingo Teachers' College Emblem" class="brand-logo-img">
                 </div>
@@ -82,10 +82,10 @@
         <!-- TAB 1: HOME & OVERVIEW -->
         <section id="tab-home" class="tab-pane active">
             <!-- Hero Component with Prominent Campus Photo -->
-            <div class="hero-showcase-container" style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0; background: var(--primary-dark); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 2.5rem; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);">
+            <div class="hero-showcase-container" style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0; background: var(--primary-dark); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 2rem; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);">
                 <div class="hero-overlay" style="padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(135deg, rgba(2, 44, 34, 0.98) 0%, rgba(6, 78, 59, 0.92) 100%);">
                     <div class="hero-logo-container" style="margin-bottom: 1.25rem;">
-                        <img src="college_logo.jpg" alt="Masvingo Teachers' College Emblem" class="hero-logo-img">
+                        <img src="college_logo.jpg" alt="Masvingo Teachers' College Emblem" class="hero-logo-img" onclick="switchTab('home')" style="cursor: pointer;">
                         <div>
                             <span class="hero-badge" style="margin-bottom: 0.2rem;">Official Academic Portal</span>
                             <div style="font-size: 0.85rem; color: #fef08a; font-weight: 600;">"Emblem of Excellence"</div>
@@ -104,8 +104,8 @@
                         </button>
                     </div>
                 </div>
-                <div style="position: relative; min-height: 380px; overflow: hidden; background: #000;">
-                    <img src="campus_hero.jpg" alt="I Love Masvingo Teachers' College Landmark Sign" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                <div style="position: relative; min-height: 380px; overflow: hidden; background: #000; cursor: pointer;" onclick="switchTab('courses')" title="Click to view academic programmes">
+                    <img src="campus_hero.jpg" alt="I Love Masvingo Teachers' College Landmark Sign" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease;">
                     <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(2, 44, 34, 0.9) 0%, transparent 100%); padding: 1.25rem 1.5rem; color: #ffffff;">
                         <span style="background: var(--accent); color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 0.25rem;">
                             <i class="fas fa-landmark"></i> Campus Landmark
@@ -115,30 +115,69 @@
                 </div>
             </div>
 
-            <!-- College Key Statistics Grid -->
+            <!-- Quick Access Portals Bar -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div class="quick-link-card" onclick="switchTab('courses')">
+                    <i class="fas fa-graduation-cap" style="color: var(--primary); font-size: 1.3rem;"></i>
+                    <div>
+                        <strong>Programmes</strong>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Diploma & ECD</div>
+                    </div>
+                </div>
+                <div class="quick-link-card" onclick="switchTab('resources')">
+                    <i class="fas fa-file-pdf" style="color: #ef4444; font-size: 1.3rem;"></i>
+                    <div>
+                        <strong>Past Papers</strong>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">2020–2026 Archive</div>
+                    </div>
+                </div>
+                <div class="quick-link-card" onclick="switchTab('announcements')">
+                    <i class="fas fa-bullhorn" style="color: var(--accent); font-size: 1.3rem;"></i>
+                    <div>
+                        <strong>Noticeboard</strong>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Urgent Updates</div>
+                    </div>
+                </div>
+                <div class="quick-link-card" onclick="switchTab('staff')">
+                    <i class="fas fa-users" style="color: var(--primary); font-size: 1.3rem;"></i>
+                    <div>
+                        <strong>Staff Directory</strong>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Lecturers & HODs</div>
+                    </div>
+                </div>
+                <div class="quick-link-card" onclick="document.getElementById('admin-mode-toggle').click();">
+                    <i class="fas fa-user-shield" style="color: #10b981; font-size: 1.3rem;"></i>
+                    <div>
+                        <strong>Staff Admin</strong>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Backend CRUD</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- College Key Statistics Grid (Clickable) -->
             <div class="stats-grid">
-                <div class="stat-card">
+                <div class="stat-card clickable-card" onclick="switchTab('courses')" title="Click to view programmes">
                     <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
                     <div>
                         <div class="stat-number" id="stat-students">2,450+</div>
                         <div class="stat-label">Active Student Teachers</div>
                     </div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card clickable-card" onclick="switchTab('staff')" title="Click to view staff directory">
                     <div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
                     <div>
                         <div class="stat-number" id="stat-lecturers">120+</div>
                         <div class="stat-label">Academic Staff</div>
                     </div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card clickable-card" onclick="switchTab('resources')" title="Click to search past examination papers">
                     <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
                     <div>
                         <div class="stat-number" id="stat-pastpapers">380+</div>
                         <div class="stat-label">Digitized Past Papers</div>
                     </div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card clickable-card" onclick="showToast('Masvingo Teachers\' College maintains a 96.4% academic & TP pass rate across all intakes!');" title="Click to learn about academic pass rate">
                     <div class="stat-icon"><i class="fas fa-award"></i></div>
                     <div>
                         <div class="stat-number" id="stat-passrate">96.4%</div>
@@ -155,11 +194,11 @@
                         <strong>Masvingo Teachers' College</strong> is committed to training highly qualified, innovative, and reflective educators who drive primary and early childhood education across Zimbabwe.
                     </p>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--primary);">
+                        <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--primary); cursor: pointer;" onclick="showToast('Vision: Premier center of teacher education and research in Sub-Saharan Africa.');">
                             <h4 style="color: var(--primary); font-size: 1.05rem; margin-bottom: 0.4rem;">Our Vision</h4>
                             <p style="font-size: 0.88rem; color: var(--text-secondary);">To be a premier center of teacher education, educational research, and technological innovation in Sub-Saharan Africa.</p>
                         </div>
-                        <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--accent);">
+                        <div style="background: var(--bg-main); padding: 1.25rem; border-radius: var(--radius-sm); border-left: 4px solid var(--accent); cursor: pointer;" onclick="showToast('Mission: Producing technologically competent educators via Heritage 5.0 inquiry.');">
                             <h4 style="color: var(--accent); font-size: 1.05rem; margin-bottom: 0.4rem;">Our Mission</h4>
                             <p style="font-size: 0.88rem; color: var(--text-secondary);">To produce technologically competent educators through rigorous academic inquiry and Heritage 5.0 practical skills.</p>
                         </div>
@@ -174,14 +213,14 @@
                             Prepared by <strong>Jerry</strong>, NUST Computer Science Industrial Attachee. Designed to complement institutional Google Workspace deployment with structured paper repositories and department portals.
                         </p>
                     </div>
-                    <div style="background: rgba(6, 78, 59, 0.08); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.82rem; color: var(--primary);">
-                        <i class="fas fa-server"></i> Built with <strong>Django ORM & Vanilla JS Architecture</strong> for easy institutional maintenance.
+                    <div style="background: rgba(6, 78, 59, 0.08); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.82rem; color: var(--primary); cursor: pointer;" onclick="switchTab('resources')">
+                        <i class="fas fa-server"></i> Built with <strong>Django ORM & Vanilla JS Architecture</strong>. <span style="text-decoration: underline;">Browse Repository &rarr;</span>
                     </div>
                 </div>
             </div>
 
             <!-- Campus Landmark Showcase Banner -->
-            <div style="position: relative; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 2.5rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-md); background: var(--bg-card);">
+            <div style="position: relative; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 2.5rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-md); background: var(--bg-card); cursor: pointer;" onclick="switchTab('courses')">
                 <div style="position: relative; max-height: 440px; overflow: hidden;">
                     <img src="campus_hero.jpg" alt="I Love Masvingo Teachers' College Campus" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                     <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(2, 44, 34, 0.92) 0%, rgba(2, 44, 34, 0.4) 65%, transparent 100%); padding: 1.5rem 2rem; color: #ffffff;">
@@ -199,7 +238,7 @@
             <div class="section-header">
                 <div class="section-title">
                     <h2>Academic Departments</h2>
-                    <p>Explore the six core departments driving academic excellence at Masvingo Teachers' College</p>
+                    <p>Click any department to explore course outlines and past examination papers</p>
                 </div>
             </div>
             <div class="dept-grid" id="departments-container"></div>
