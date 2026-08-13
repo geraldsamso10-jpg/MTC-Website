@@ -228,8 +228,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         </span>
                         <h3 style="font-size: 1.35rem; margin-top: 0.4rem;">${prog.title}</h3>
                     </div>
-                    <a href="${prog.googleClassroomLink}" target="_blank" class="workspace-badge" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
-                        <i class="fab fa-google"></i> Google Classroom Portal
+                    <a href="${prog.googleClassroomLink}" target="_blank" class="workspace-badge" style="background: #064e3b !important; color: #ffffff !important; font-weight: 700; padding: 0.45rem 0.9rem; border-radius: 20px; border: 1.5px solid #047857; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 6px rgba(6,78,59,0.25);">
+                        <i class="fab fa-google" style="color: #fbbf24;"></i> Google Classroom Portal
                     </a>
                 </div>
                 <p style="color: var(--text-secondary); margin-bottom: 1rem;">${prog.description}</p>
@@ -507,10 +507,10 @@ ${paper.questionsPreview.join('\n\n')}
                     </div>
                     
                     <div style="display: flex; gap: 0.5rem; width: 100%;">
-                        <button class="btn btn-primary btn-sm" style="flex: 1; justify-content: center;" onclick="event.stopPropagation(); viewStaffProfile('${staff.id}')">
+                        <button class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; background: #064e3b !important; color: #ffffff !important; font-weight: 700; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 6px rgba(6,78,59,0.3);" onclick="event.stopPropagation(); viewStaffProfile('${staff.id}')">
                             <i class="fas fa-id-card"></i> View Profile
                         </button>
-                        <a href="${staff.classroomLink || '#'}" target="_blank" onclick="event.stopPropagation();" class="btn btn-secondary btn-sm" style="padding: 0.45rem 0.85rem;" title="Google Classroom">
+                        <a href="${staff.classroomLink || '#'}" target="_blank" onclick="event.stopPropagation();" class="btn btn-secondary btn-sm" style="padding: 0.5rem 0.9rem; background: #d97706 !important; color: #ffffff !important; border: none; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;" title="Google Classroom">
                             <i class="fab fa-google"></i>
                         </a>
                     </div>
@@ -660,8 +660,8 @@ ${paper.questionsPreview.join('\n\n')}
                     </div>
                 </div>
                 <div class="manage-item-actions">
-                    <button type="button" class="btn-edit" onclick="event.stopPropagation(); openEditModal('paper', '${p.id}');"><i class="fas fa-edit"></i> Edit</button>
-                    <button type="button" class="btn-danger" onclick="event.stopPropagation(); deleteItem('paper', '${p.id}');"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn-edit" style="background: #0284c7 !important; color: #ffffff !important; font-weight: 700; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 6px rgba(2,132,199,0.35);" onclick="event.stopPropagation(); openEditModal('paper', '${p.id}');"><i class="fas fa-edit"></i> Edit</button>
+                    <button type="button" class="btn-danger" style="background: #dc2626 !important; color: #ffffff !important; font-weight: 700; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 6px rgba(220,38,38,0.35);" onclick="event.stopPropagation(); deleteItem('paper', '${p.id}');"><i class="fas fa-trash"></i> Delete</button>
                 </div>
             </div>
         `).join('');
@@ -678,8 +678,8 @@ ${paper.questionsPreview.join('\n\n')}
                     </div>
                 </div>
                 <div class="manage-item-actions">
-                    <button type="button" class="btn-edit" onclick="event.stopPropagation(); openEditModal('anc', '${a.id}');"><i class="fas fa-edit"></i> Edit</button>
-                    <button type="button" class="btn-danger" onclick="event.stopPropagation(); deleteItem('anc', '${a.id}');"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn-edit" style="background: #0284c7 !important; color: #ffffff !important; font-weight: 700; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 6px rgba(2,132,199,0.35);" onclick="event.stopPropagation(); openEditModal('anc', '${a.id}');"><i class="fas fa-edit"></i> Edit</button>
+                    <button type="button" class="btn-danger" style="background: #dc2626 !important; color: #ffffff !important; font-weight: 700; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 6px rgba(220,38,38,0.35);" onclick="event.stopPropagation(); deleteItem('anc', '${a.id}');"><i class="fas fa-trash"></i> Delete</button>
                 </div>
             </div>
         `).join('');
@@ -696,8 +696,8 @@ ${paper.questionsPreview.join('\n\n')}
                     </div>
                 </div>
                 <div class="manage-item-actions">
-                    <button type="button" class="btn-edit" onclick="event.stopPropagation(); openEditModal('staff', '${s.id}');"><i class="fas fa-edit"></i> Edit</button>
-                    <button type="button" class="btn-danger" onclick="event.stopPropagation(); deleteItem('staff', '${s.id}');"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn-edit" style="background: #0284c7 !important; color: #ffffff !important; font-weight: 700; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 6px rgba(2,132,199,0.35);" onclick="event.stopPropagation(); openEditModal('staff', '${s.id}');"><i class="fas fa-edit"></i> Edit</button>
+                    <button type="button" class="btn-danger" style="background: #dc2626 !important; color: #ffffff !important; font-weight: 700; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 6px rgba(220,38,38,0.35);" onclick="event.stopPropagation(); deleteItem('staff', '${s.id}');"><i class="fas fa-trash"></i> Delete</button>
                 </div>
             </div>
         `).join('');

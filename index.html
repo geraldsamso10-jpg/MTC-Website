@@ -20,8 +20,81 @@
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="college_logo.jpg">
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Custom CSS with cache busting -->
+    <link rel="stylesheet" href="styles.css?v=5.0">
+    
+    <!-- Direct High-Contrast Overrides -->
+    <style>
+        .workspace-badge {
+            background: #064e3b !important;
+            color: #ffffff !important;
+            padding: 0.4rem 0.9rem !important;
+            border-radius: 20px !important;
+            font-size: 0.85rem !important;
+            font-weight: 700 !important;
+            border: 1.5px solid #047857 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.45rem !important;
+            text-decoration: none !important;
+            box-shadow: 0 2px 6px rgba(6, 78, 59, 0.3) !important;
+        }
+        .workspace-badge i {
+            color: #fbbf24 !important;
+        }
+        .btn-edit {
+            background: #0284c7 !important;
+            color: #ffffff !important;
+            border: none !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            font-weight: 700 !important;
+            font-size: 0.85rem !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.4rem !important;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4) !important;
+        }
+        .btn-danger {
+            background: #dc2626 !important;
+            color: #ffffff !important;
+            border: none !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 6px !important;
+            font-weight: 700 !important;
+            font-size: 0.85rem !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.4rem !important;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4) !important;
+        }
+        .btn-secondary {
+            background: #064e3b !important;
+            color: #ffffff !important;
+            border: 1px solid #047857 !important;
+            font-weight: 700 !important;
+        }
+        .form-control, input, select, textarea {
+            background: #ffffff !important;
+            color: #000000 !important;
+            border: 2px solid #334155 !important;
+            font-weight: 600 !important;
+        }
+        [data-theme="dark"] .form-control, [data-theme="dark"] input, [data-theme="dark"] select, [data-theme="dark"] textarea {
+            background: #0f172a !important;
+            color: #ffffff !important;
+            border: 2px solid #475569 !important;
+        }
+        label {
+            color: #000000 !important;
+            font-weight: 800 !important;
+        }
+        [data-theme="dark"] label {
+            color: #f1f5f9 !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -627,8 +700,8 @@
         </div>
     </footer>
 
-    <!-- JavaScript Files -->
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+    <!-- JavaScript Files with Cache Busting -->
+    <script src="data.js?v=5.0"></script>
+    <script src="app.js?v=5.0"></script>
 </body>
 </html>
