@@ -154,32 +154,21 @@
 
         <!-- TAB 1: HOME & OVERVIEW -->
         <section id="tab-home" class="tab-pane active">
-            <!-- Hero Component with Prominent Campus Photo -->
-            <div class="hero-showcase-container" style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0; background: var(--primary-dark); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 2rem; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);">
-                <div class="hero-overlay" style="padding: 3rem 2.5rem; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(135deg, rgba(2, 44, 34, 0.98) 0%, rgba(6, 78, 59, 0.92) 100%);">
-                    <span class="hero-badge" style="margin-bottom: 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem; width: fit-content;">
-                        <i class="fas fa-graduation-cap"></i> Official Academic Portal • Department of ICT
-                    </span>
-                    <h2 class="hero-title" style="font-size: 2.1rem; line-height: 1.25; margin-bottom: 1rem; color: #ffffff;">Empowering Educator Preparation through Digital Academic Access</h2>
-                    <p class="hero-subtitle" style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
-                        Welcome to the official Academic Web Portal of Masvingo Teachers' College. Explore course outlines, search past examination papers from 2020–2026, track academic dates, and connect with Google Classroom e-learning modules.
+            <!-- Hero Banner Component -->
+            <div class="hero-card">
+                <div class="hero-overlay">
+                    <span class="hero-badge">Official Academic Portal</span>
+                    <h2 class="hero-title">Empowering Educator Preparation through Digital Academic Access</h2>
+                    <p class="hero-subtitle">
+                        Welcome to the official Academic Web Portal of Masvingo Teachers' College. Access course outlines, search past examination papers from 2020–2026, track academic dates, and connect with Google Classroom e-learning resources.
                     </p>
-                    <div class="hero-actions" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <div class="hero-actions">
                         <button class="btn btn-primary" onclick="switchTab('resources')">
                             <i class="fas fa-search"></i> Search Past Examination Papers
                         </button>
                         <button class="btn btn-secondary" onclick="switchTab('courses')">
                             <i class="fas fa-book-open"></i> Browse Programmes & Courses
                         </button>
-                    </div>
-                </div>
-                <div style="position: relative; min-height: 380px; overflow: hidden; background: #000; cursor: pointer;" onclick="switchTab('courses')" title="Click to view academic programmes">
-                    <img src="campus_hero.jpg" alt="I Love Masvingo Teachers' College Landmark Sign" style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease;">
-                    <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(0deg, rgba(2, 44, 34, 0.9) 0%, transparent 100%); padding: 1.25rem 1.5rem; color: #ffffff;">
-                        <span style="background: var(--accent); color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 0.25rem;">
-                            <i class="fas fa-landmark"></i> Campus Landmark
-                        </span>
-                        <div style="font-size: 0.9rem; font-weight: 600;">"I ❤️ Masvingo Teachers' College"</div>
                     </div>
                 </div>
             </div>
