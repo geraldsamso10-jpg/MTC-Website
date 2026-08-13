@@ -9,15 +9,40 @@ document.addEventListener('DOMContentLoaded', () => {
     let isStaffLoggedIn = localStorage.getItem('mtc_staff_auth') === 'true';
     let sessionUser = localStorage.getItem('mtc_staff_user') || 'Jerry (ICT Admin)';
 
-    // Retrieve Custom Uploaded Items from LocalStorage
+    // Retrieve Custom & Updated Items from LocalStorage
     let customPapers = JSON.parse(localStorage.getItem('mtc_custom_papers') || '[]');
     let customAnnouncements = JSON.parse(localStorage.getItem('mtc_custom_anc') || '[]');
     let customStaff = JSON.parse(localStorage.getItem('mtc_custom_staff') || '[]');
 
-    // Combine static datasets with persistent user-uploaded items
-    MTC_DATA.pastPapers = [...customPapers, ...MTC_DATA.pastPapers];
-    MTC_DATA.announcements = [...customAnnouncements, ...MTC_DATA.announcements];
-    MTC_DATA.staffDirectory = [...customStaff, ...MTC_DATA.staffDirectory];
+    // Merge custom papers
+    customPapers.forEach(cp => {
+        const existingIdx = MTC_DATA.pastPapers.findIndex(p => p.id === cp.id);
+        if (existingIdx !== -1) {
+            MTC_DATA.pastPapers[existingIdx] = cp;
+        } else {
+            MTC_DATA.pastPapers.unshift(cp);
+        }
+    });
+
+    // Merge custom announcements
+    customAnnouncements.forEach(ca => {
+        const existingIdx = MTC_DATA.announcements.findIndex(a => a.id === ca.id);
+        if (existingIdx !== -1) {
+            MTC_DATA.announcements[existingIdx] = ca;
+        } else {
+            MTC_DATA.announcements.unshift(ca);
+        }
+    });
+
+    // Merge custom staff
+    customStaff.forEach(cs => {
+        const existingIdx = MTC_DATA.staffDirectory.findIndex(s => s.id === cs.id);
+        if (existingIdx !== -1) {
+            MTC_DATA.staffDirectory[existingIdx] = cs;
+        } else {
+            MTC_DATA.staffDirectory.unshift(cs);
+        }
+    });
 
     let activePapers = [...MTC_DATA.pastPapers];
     let activeAnnouncements = [...MTC_DATA.announcements];
@@ -533,60 +558,61 @@ ${paper.questionsPreview.join('\n\n')}
         if (!listEl) return;
 
         let html = `
-            <div style="background: rgba(6,78,59,0.06); padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; border-left: 4px solid var(--primary); font-size: 0.82rem; color: var(--primary);">
-                <i class="fas fa-database"></i> <strong>Backend CRUD Portal Control:</strong> Developers and authorized staff can edit, re-upload pictures, or delete any record below. Changes sync instantly across the backend ORM database.
+            <div style="background: rgba(6,78,59,0.06); padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1.25rem; border-left: 4px solid var(--primary); font-size: 0.85rem; color: var(--primary);">
+                <i class="fas fa-database"></i> <strong>Backend Management Control:</strong> Click <strong>Edit</strong> on any item to update text, details, or replace photos. Click <strong>Delete</strong> to permanently remove records.
             </div>
-            <h5 style="margin-bottom: 0.5rem; color: var(--primary); font-size: 0.9rem;"><i class="fas fa-file-pdf"></i> Past Examination Papers (${MTC_DATA.pastPapers.length})</h5>
+            
+            <h5 style="margin-bottom: 0.6rem; color: var(--primary); font-size: 0.95rem; font-weight: 700;"><i class="fas fa-file-pdf"></i> Past Examination Papers (${MTC_DATA.pastPapers.length})</h5>
         `;
 
         html += MTC_DATA.pastPapers.map(p => `
-            <div class="manage-item-card">
+            <div class="manage-item-card" id="manage-paper-${p.id}">
                 <div class="manage-item-info">
                     ${p.image ? `<img src="${p.image}" class="manage-item-thumb">` : `<div style="width:44px; height:44px; background:rgba(6,78,59,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--primary); font-weight:700;">${p.code}</div>`}
                     <div>
-                        <strong style="font-size: 0.95rem;">${p.code}: ${p.title}</strong>
+                        <strong style="font-size: 0.95rem; display: block;">${p.code}: ${p.title}</strong>
                         <div style="font-size: 0.78rem; color: var(--text-secondary);">${p.year} • Examiner: ${p.examiner}</div>
                     </div>
                 </div>
                 <div class="manage-item-actions">
-                    <button class="btn btn-secondary btn-sm" onclick="openEditModal('paper', '${p.id}')"><i class="fas fa-edit"></i> Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteItem('paper', '${p.id}')"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openEditModal('paper', '${p.id}');"><i class="fas fa-edit"></i> Edit</button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deleteItem('paper', '${p.id}');"><i class="fas fa-trash"></i> Delete</button>
                 </div>
             </div>
         `).join('');
 
-        html += `<h5 style="margin: 1.25rem 0 0.5rem 0; color: var(--accent); font-size: 0.9rem;"><i class="fas fa-bullhorn"></i> Academic Notices (${MTC_DATA.announcements.length})</h5>`;
+        html += `<h5 style="margin: 1.5rem 0 0.6rem 0; color: var(--accent); font-size: 0.95rem; font-weight: 700;"><i class="fas fa-bullhorn"></i> Academic Notices (${MTC_DATA.announcements.length})</h5>`;
 
         html += MTC_DATA.announcements.map(a => `
-            <div class="manage-item-card">
+            <div class="manage-item-card" id="manage-anc-${a.id}">
                 <div class="manage-item-info">
                     ${a.image ? `<img src="${a.image}" class="manage-item-thumb">` : `<div style="width:44px; height:44px; background:rgba(217,119,6,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--accent);"><i class="fas fa-bullhorn"></i></div>`}
                     <div>
-                        <strong style="font-size: 0.95rem;">${a.title}</strong>
+                        <strong style="font-size: 0.95rem; display: block;">${a.title}</strong>
                         <div style="font-size: 0.78rem; color: var(--text-secondary);">${a.category} • ${a.date}</div>
                     </div>
                 </div>
                 <div class="manage-item-actions">
-                    <button class="btn btn-secondary btn-sm" onclick="openEditModal('anc', '${a.id}')"><i class="fas fa-edit"></i> Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteItem('anc', '${a.id}')"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openEditModal('anc', '${a.id}');"><i class="fas fa-edit"></i> Edit</button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deleteItem('anc', '${a.id}');"><i class="fas fa-trash"></i> Delete</button>
                 </div>
             </div>
         `).join('');
 
-        html += `<h5 style="margin: 1.25rem 0 0.5rem 0; color: var(--primary); font-size: 0.9rem;"><i class="fas fa-users"></i> Staff Directory Members (${MTC_DATA.staffDirectory.length})</h5>`;
+        html += `<h5 style="margin: 1.5rem 0 0.6rem 0; color: var(--primary); font-size: 0.95rem; font-weight: 700;"><i class="fas fa-users"></i> Staff Directory Members (${MTC_DATA.staffDirectory.length})</h5>`;
 
         html += MTC_DATA.staffDirectory.map(s => `
-            <div class="manage-item-card">
+            <div class="manage-item-card" id="manage-staff-${s.id}">
                 <div class="manage-item-info">
                     ${s.photo ? `<img src="${s.photo}" class="manage-item-thumb">` : `<div style="width:44px; height:44px; background:var(--primary); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700;">${s.name.charAt(0)}</div>`}
                     <div>
-                        <strong style="font-size: 0.95rem;">${s.name}</strong>
+                        <strong style="font-size: 0.95rem; display: block;">${s.name}</strong>
                         <div style="font-size: 0.78rem; color: var(--text-secondary);">${s.title} • ${s.office}</div>
                     </div>
                 </div>
                 <div class="manage-item-actions">
-                    <button class="btn btn-secondary btn-sm" onclick="openEditModal('staff', '${s.id}')"><i class="fas fa-edit"></i> Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteItem('staff', '${s.id}')"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openEditModal('staff', '${s.id}');"><i class="fas fa-edit"></i> Edit</button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deleteItem('staff', '${s.id}');"><i class="fas fa-trash"></i> Delete</button>
                 </div>
             </div>
         `).join('');
@@ -639,38 +665,41 @@ ${paper.questionsPreview.join('\n\n')}
             const item = MTC_DATA.pastPapers.find(p => p.id === id);
             if (!item) return;
 
-            titleEl.textContent = `Backend Edit: ${item.code}`;
+            titleEl.textContent = `Backend Edit: ${item.code} - ${item.title}`;
             bodyEl.innerHTML = `
                 <form id="edit-item-form" onsubmit="event.preventDefault(); saveEditItem('paper', '${item.id}');">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                         <div>
-                            <label style="font-size: 0.8rem; font-weight: 600;">Course Code</label>
+                            <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Course Code</label>
                             <input type="text" id="edit-field-code" class="form-control" value="${item.code}" required>
                         </div>
                         <div>
-                            <label style="font-size: 0.8rem; font-weight: 600;">Course Title</label>
+                            <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Course Title</label>
                             <input type="text" id="edit-field-title" class="form-control" value="${item.title}" required>
                         </div>
                         <div>
-                            <label style="font-size: 0.8rem; font-weight: 600;">Exam Year</label>
+                            <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Exam Year</label>
                             <input type="text" id="edit-field-year" class="form-control" value="${item.year}" required>
                         </div>
                         <div>
-                            <label style="font-size: 0.8rem; font-weight: 600;">Examiner Name</label>
+                            <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Examiner Name</label>
                             <input type="text" id="edit-field-examiner" class="form-control" value="${item.examiner}" required>
                         </div>
                     </div>
                     <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.8rem; font-weight: 600;">Sample Question 1</label>
+                        <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Sample Question 1</label>
                         <textarea id="edit-field-q1" class="form-control" rows="2" required>${item.questionsPreview[0] || ''}</textarea>
                     </div>
-                    <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.8rem; font-weight: 600;"><i class="fas fa-image"></i> Replace Picture / Diagram</label>
+                    <div style="margin-bottom: 1.25rem;">
+                        <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;"><i class="fas fa-image"></i> Replace Picture / Diagram</label>
                         <input type="file" id="edit-file-img" class="form-control" accept="image/*">
-                        ${item.image ? `<div style="margin-top:0.5rem;"><small>Current Image:</small><br><img src="${item.image}" style="max-height:80px; border-radius:4px;"></div>` : ''}
+                        ${item.image ? `<div style="margin-top:0.5rem;"><small style="color:var(--text-muted);">Current Attached Image:</small><br><img src="${item.image}" style="max-height:80px; border-radius:6px; border:1px solid var(--border-color); margin-top:0.25rem;"></div>` : ''}
                         <div id="edit-img-preview" class="img-upload-preview"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;"><i class="fas fa-save"></i> Save Backend Changes</button>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button type="submit" class="btn btn-primary" style="flex: 2; justify-content: center;"><i class="fas fa-save"></i> Save Changes to Portal</button>
+                        <button type="button" class="btn btn-secondary" style="flex: 1; justify-content: center;" onclick="closeEditModal()"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
                 </form>
             `;
         } else if (type === 'anc') {
@@ -680,21 +709,35 @@ ${paper.questionsPreview.join('\n\n')}
             titleEl.textContent = `Backend Edit: ${item.title}`;
             bodyEl.innerHTML = `
                 <form id="edit-item-form" onsubmit="event.preventDefault(); saveEditItem('anc', '${item.id}');">
-                    <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.8rem; font-weight: 600;">Notice Title</label>
-                        <input type="text" id="edit-field-title" class="form-control" value="${item.title}" required>
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Notice Title</label>
+                            <input type="text" id="edit-field-title" class="form-control" value="${item.title}" required>
+                        </div>
+                        <div>
+                            <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Category</label>
+                            <select id="edit-field-cat" class="form-control" required>
+                                <option value="Urgent" ${item.category === 'Urgent' ? 'selected' : ''}>Urgent</option>
+                                <option value="Exam Notice" ${item.category === 'Exam Notice' || item.category === 'Exam' ? 'selected' : ''}>Exam Notice</option>
+                                <option value="Google Classroom" ${item.category === 'Google Classroom' || item.category === 'E-Learning' ? 'selected' : ''}>Google Classroom</option>
+                                <option value="Teaching Practice" ${item.category === 'Teaching Practice' || item.category === 'TP' ? 'selected' : ''}>Teaching Practice</option>
+                            </select>
+                        </div>
                     </div>
                     <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.8rem; font-weight: 600;">Content</label>
+                        <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Content Body</label>
                         <textarea id="edit-field-content" class="form-control" rows="3" required>${item.content}</textarea>
                     </div>
-                    <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.8rem; font-weight: 600;"><i class="fas fa-camera"></i> Replace Picture / Banner</label>
+                    <div style="margin-bottom: 1.25rem;">
+                        <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;"><i class="fas fa-camera"></i> Replace Picture / Event Banner</label>
                         <input type="file" id="edit-file-img" class="form-control" accept="image/*">
-                        ${item.image ? `<div style="margin-top:0.5rem;"><small>Current Image:</small><br><img src="${item.image}" style="max-height:80px; border-radius:4px;"></div>` : ''}
+                        ${item.image ? `<div style="margin-top:0.5rem;"><small style="color:var(--text-muted);">Current Attached Banner:</small><br><img src="${item.image}" style="max-height:80px; border-radius:6px; border:1px solid var(--border-color); margin-top:0.25rem;"></div>` : ''}
                         <div id="edit-img-preview" class="img-upload-preview"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;"><i class="fas fa-save"></i> Save Backend Changes</button>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button type="submit" class="btn btn-primary" style="flex: 2; justify-content: center;"><i class="fas fa-save"></i> Save Changes to Noticeboard</button>
+                        <button type="button" class="btn btn-secondary" style="flex: 1; justify-content: center;" onclick="closeEditModal()"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
                 </form>
             `;
         } else if (type === 'staff') {
@@ -706,29 +749,36 @@ ${paper.questionsPreview.join('\n\n')}
                 <form id="edit-item-form" onsubmit="event.preventDefault(); saveEditItem('staff', '${item.id}');">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                         <div>
-                            <label style="font-size: 0.8rem; font-weight: 600;">Full Name</label>
+                            <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Full Name & Title</label>
                             <input type="text" id="edit-field-name" class="form-control" value="${item.name}" required>
                         </div>
                         <div>
-                            <label style="font-size: 0.8rem; font-weight: 600;">Title / Designation</label>
+                            <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Title / Designation</label>
                             <input type="text" id="edit-field-title" class="form-control" value="${item.title}" required>
                         </div>
                         <div>
-                            <label style="font-size: 0.8rem; font-weight: 600;">Email</label>
+                            <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Email Address</label>
                             <input type="email" id="edit-field-email" class="form-control" value="${item.email}" required>
                         </div>
                         <div>
-                            <label style="font-size: 0.8rem; font-weight: 600;">Office Location</label>
+                            <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Office Room</label>
                             <input type="text" id="edit-field-office" class="form-control" value="${item.office}" required>
                         </div>
                     </div>
                     <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.8rem; font-weight: 600;"><i class="fas fa-id-badge"></i> Replace Profile Photo (Picture)</label>
+                        <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;">Specialization & Research Focus</label>
+                        <input type="text" id="edit-field-spec" class="form-control" value="${item.specialization || ''}">
+                    </div>
+                    <div style="margin-bottom: 1.25rem;">
+                        <label style="font-size: 0.82rem; font-weight: 600; margin-bottom: 0.3rem; display: block;"><i class="fas fa-id-badge"></i> Replace Profile Photo (Picture)</label>
                         <input type="file" id="edit-file-img" class="form-control" accept="image/*">
-                        ${item.photo ? `<div style="margin-top:0.5rem;"><small>Current Photo:</small><br><img src="${item.photo}" style="max-height:80px; border-radius:50%;"></div>` : ''}
+                        ${item.photo ? `<div style="margin-top:0.5rem;"><small style="color:var(--text-muted);">Current Photo:</small><br><img src="${item.photo}" style="max-height:80px; border-radius:50%; border:1px solid var(--border-color); margin-top:0.25rem;"></div>` : ''}
                         <div id="edit-img-preview" class="img-upload-preview"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;"><i class="fas fa-save"></i> Save Backend Changes</button>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button type="submit" class="btn btn-primary" style="flex: 2; justify-content: center;"><i class="fas fa-save"></i> Save Profile Changes</button>
+                        <button type="button" class="btn btn-secondary" style="flex: 1; justify-content: center;" onclick="closeEditModal()"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
                 </form>
             `;
         }
@@ -755,7 +805,11 @@ ${paper.questionsPreview.join('\n\n')}
                 if (editUploadedImg) item.image = editUploadedImg;
 
                 const customIndex = customPapers.findIndex(p => p.id === id);
-                if (customIndex !== -1) customPapers[customIndex] = { ...item };
+                if (customIndex !== -1) {
+                    customPapers[customIndex] = { ...item };
+                } else {
+                    customPapers.push({ ...item });
+                }
                 localStorage.setItem('mtc_custom_papers', JSON.stringify(customPapers));
 
                 activePapers = [...MTC_DATA.pastPapers];
@@ -766,11 +820,16 @@ ${paper.questionsPreview.join('\n\n')}
             const item = MTC_DATA.announcements.find(a => a.id === id);
             if (item) {
                 item.title = document.getElementById('edit-field-title').value;
+                item.category = document.getElementById('edit-field-cat') ? document.getElementById('edit-field-cat').value : item.category;
                 item.content = document.getElementById('edit-field-content').value;
                 if (editUploadedImg) item.image = editUploadedImg;
 
                 const customIndex = customAnnouncements.findIndex(a => a.id === id);
-                if (customIndex !== -1) customAnnouncements[customIndex] = { ...item };
+                if (customIndex !== -1) {
+                    customAnnouncements[customIndex] = { ...item };
+                } else {
+                    customAnnouncements.push({ ...item });
+                }
                 localStorage.setItem('mtc_custom_anc', JSON.stringify(customAnnouncements));
 
                 activeAnnouncements = [...MTC_DATA.announcements];
@@ -784,10 +843,16 @@ ${paper.questionsPreview.join('\n\n')}
                 item.title = document.getElementById('edit-field-title').value;
                 item.email = document.getElementById('edit-field-email').value;
                 item.office = document.getElementById('edit-field-office').value;
+                const specInput = document.getElementById('edit-field-spec');
+                if (specInput) item.specialization = specInput.value;
                 if (editUploadedImg) item.photo = editUploadedImg;
 
                 const customIndex = customStaff.findIndex(s => s.id === id);
-                if (customIndex !== -1) customStaff[customIndex] = { ...item };
+                if (customIndex !== -1) {
+                    customStaff[customIndex] = { ...item };
+                } else {
+                    customStaff.push({ ...item });
+                }
                 localStorage.setItem('mtc_custom_staff', JSON.stringify(customStaff));
 
                 renderStaffDirectory(item.id);

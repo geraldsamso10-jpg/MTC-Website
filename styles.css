@@ -812,6 +812,10 @@ a {
     transition: opacity 0.25s ease;
 }
 
+#edit-modal {
+    z-index: 2500;
+}
+
 .modal-backdrop.active {
     opacity: 1;
     pointer-events: auto;
