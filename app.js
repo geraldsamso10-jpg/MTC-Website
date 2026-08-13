@@ -100,18 +100,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const userEl = document.getElementById('session-username');
         const adminBtn = document.getElementById('admin-mode-toggle');
 
+        // Badge always visible — shows current user or default "Jerry (ICT Admin)"
+        if (badge) badge.style.display = 'inline-flex';
         if (isStaffLoggedIn) {
-            if (badge) badge.style.display = 'inline-flex';
             if (userEl) userEl.textContent = sessionUser;
             if (adminBtn) {
                 adminBtn.classList.add('active');
                 adminBtn.innerHTML = `<i class="fas fa-user-shield"></i> Staff Dashboard (Backend)`;
             }
         } else {
-            if (badge) badge.style.display = 'none';
+            if (userEl) userEl.textContent = 'Jerry (ICT Admin)';
             if (adminBtn) {
                 adminBtn.classList.remove('active');
-                adminBtn.innerHTML = `<i class="fas fa-user-shield"></i> Staff Portal / Admin`;
+                adminBtn.innerHTML = `<i class="fas fa-user-shield"></i> Staff Dashboard (Backend)`;
             }
         }
 
