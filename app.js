@@ -655,13 +655,13 @@ ${paper.questionsPreview.join('\n\n')}
                 <div class="manage-item-info">
                     ${p.image ? `<img src="${p.image}" class="manage-item-thumb">` : `<div style="width:44px; height:44px; background:rgba(6,78,59,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--primary); font-weight:700;">${p.code}</div>`}
                     <div>
-                        <strong style="font-size: 0.95rem; display: block;">${p.code}: ${p.title}</strong>
+                        <strong style="font-size: 0.95rem; display: block; color: var(--text-primary);">${p.code}: ${p.title}</strong>
                         <div style="font-size: 0.78rem; color: var(--text-secondary);">${p.year} • Examiner: ${p.examiner}</div>
                     </div>
                 </div>
                 <div class="manage-item-actions">
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openEditModal('paper', '${p.id}');"><i class="fas fa-edit"></i> Edit</button>
-                    <button type="button" class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deleteItem('paper', '${p.id}');"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn-edit" onclick="event.stopPropagation(); openEditModal('paper', '${p.id}');"><i class="fas fa-edit"></i> Edit</button>
+                    <button type="button" class="btn-danger" onclick="event.stopPropagation(); deleteItem('paper', '${p.id}');"><i class="fas fa-trash"></i> Delete</button>
                 </div>
             </div>
         `).join('');
@@ -673,13 +673,13 @@ ${paper.questionsPreview.join('\n\n')}
                 <div class="manage-item-info">
                     ${a.image ? `<img src="${a.image}" class="manage-item-thumb">` : `<div style="width:44px; height:44px; background:rgba(217,119,6,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--accent);"><i class="fas fa-bullhorn"></i></div>`}
                     <div>
-                        <strong style="font-size: 0.95rem; display: block;">${a.title}</strong>
+                        <strong style="font-size: 0.95rem; display: block; color: var(--text-primary);">${a.title}</strong>
                         <div style="font-size: 0.78rem; color: var(--text-secondary);">${a.category} • ${a.date}</div>
                     </div>
                 </div>
                 <div class="manage-item-actions">
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openEditModal('anc', '${a.id}');"><i class="fas fa-edit"></i> Edit</button>
-                    <button type="button" class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deleteItem('anc', '${a.id}');"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn-edit" onclick="event.stopPropagation(); openEditModal('anc', '${a.id}');"><i class="fas fa-edit"></i> Edit</button>
+                    <button type="button" class="btn-danger" onclick="event.stopPropagation(); deleteItem('anc', '${a.id}');"><i class="fas fa-trash"></i> Delete</button>
                 </div>
             </div>
         `).join('');
@@ -691,13 +691,13 @@ ${paper.questionsPreview.join('\n\n')}
                 <div class="manage-item-info">
                     ${s.photo ? `<img src="${s.photo}" class="manage-item-thumb">` : `<div style="width:44px; height:44px; background:var(--primary); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700;">${s.name.charAt(0)}</div>`}
                     <div>
-                        <strong style="font-size: 0.95rem; display: block;">${s.name}</strong>
+                        <strong style="font-size: 0.95rem; display: block; color: var(--text-primary);">${s.name}</strong>
                         <div style="font-size: 0.78rem; color: var(--text-secondary);">${s.title} • ${s.office}</div>
                     </div>
                 </div>
                 <div class="manage-item-actions">
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openEditModal('staff', '${s.id}');"><i class="fas fa-edit"></i> Edit</button>
-                    <button type="button" class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deleteItem('staff', '${s.id}');"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn-edit" onclick="event.stopPropagation(); openEditModal('staff', '${s.id}');"><i class="fas fa-edit"></i> Edit</button>
+                    <button type="button" class="btn-danger" onclick="event.stopPropagation(); deleteItem('staff', '${s.id}');"><i class="fas fa-trash"></i> Delete</button>
                 </div>
             </div>
         `).join('');
