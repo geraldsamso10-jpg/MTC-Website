@@ -150,19 +150,21 @@ a {
 
 /* Main Navigation Header */
 .main-header {
-    background: var(--bg-nav);
+    background: #064e3b !important;
     backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .header-container {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0.8rem 1.5rem;
+    padding: 0.5rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -175,8 +177,8 @@ a {
 }
 
 .logo-badge {
-    width: 107px;
-    height: 97px;
+    width: 52px;
+    height: 52px;
     background: #ffffff;
     border-radius: 50%;
     display: flex;
@@ -237,13 +239,13 @@ a {
 
 .brand-text h1 {
     font-size: 1.35rem;
-    color: #ffffff;
+    color: #ffffff !important;
     letter-spacing: -0.02em;
 }
 
 .brand-text p {
     font-size: 0.78rem;
-    color: #94a3b8;
+    color: #94a3b8 !important;
 }
 
 .header-controls {
@@ -279,8 +281,9 @@ a {
 
 /* Tab Bar */
 .nav-tabs-wrapper {
-    background: rgba(2, 44, 34, 0.95);
+    background: #022c22 !important;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin: 0 !important;
 }
 
 .nav-tabs {
